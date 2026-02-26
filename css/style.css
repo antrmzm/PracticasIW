@@ -1,0 +1,227 @@
+/*  VARIABLES GLOBALES  */
+:root {
+    --hover-color: #1ed81b;        /* Color para efectos hover alternativos */
+    --text-color: #ccd6f6;         /* Color principal del texto (alto contraste en fondo oscuro) */
+    --badge-color: #006400;        /* Color secundario institucional */
+    --base-font-size: 18px;          /* Tamaño base tipográfico */
+    --link-font-size: 1.5rem;        /* Tamaño reservado para enlaces destacados */
+    --accent-color: #64ffda;       /* Color de acento principal (identidad del hero) */
+}
+
+/*  RESET GLOBAL  Normaliza el comportamiento visual eliminando 
+    estilos predeterminados del navegador */
+ *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Modelo de caja más predecible */
+ }
+
+/*  CONFIGURACIÓN BASE  */
+body { 
+    height: 100%;                   
+    margin: 0;                      
+    background-color: #0a192f;      /* Fondo oscuro principal */
+    color: var(--text-color);         /* Texto claro para contraste */
+    font-family: Arial, sans-serif;   /* Fuente base del sistema */
+}
+
+section {
+    min-height: 100vh;
+}
+
+
+/* HERO SECTION Sección principal de presentación del sitio */
+.hero-section {
+    height: 100vh;                  /* Ocupa el 90% del alto visible */
+    display: flex;                 /* Activación de Flexbox */
+    align-items: center;           /* Centrado vertical */
+    padding-left: 150px;           /* Separación lateral estructural */
+    background-color: #0a192f;  /* Consistencia de fondo */
+}
+/* Contenedor interno que limita ancho para mejorar legibilidad */
+.hero-content {
+    max-width: 600px;
+    line-height: 1.5;
+}
+/* Texto introductorio superior */
+.saludo {
+    color: var(--accent-color); /* Uso del color de identidad */
+    font-size: 18px;
+}
+/* Título principal del Hero */
+.hero-content h1 {
+    font-size: 60px;   /* Máxima jerarquía visual */
+    margin: 10px 0;
+    color: #ccd6f6;
+}
+/* Subtítulo descriptivo */
+.hero-content h2 {
+    font-size: 50px;
+    color: #8892b0;    /* Tono secundario */
+    margin-bottom: 20px;
+}
+/* Texto descriptivo del Hero */
+.description {
+    color: #8892b0;
+    line-height: 1.6;   /* Mejora lectura */
+    text-align: justify;
+}
+/* Se mantienen como <a> para semántica correcta
+   pero se estilizan visualmente */
+
+
+.links ul{
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    list-style: none;
+    margin-top: 30px;
+}
+
+
+/* Estética tipo botón */
+.links a {
+    text-decoration: none;                
+    color: var(--accent-color);           
+    border: 1px solid var(--accent-color);
+    padding: 12px 28px;
+    border-radius: 8px;
+    background-color: transparent;
+    transition: all 0.3s ease;            
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+/* Efecto hover con animación */
+.links a:hover {
+    border-color: var(--hover-color);
+    color: var(--hover-color);
+    transform: translateY(-3px); /* Micro-interacción */
+}
+
+ul {
+    list-style: none;     /* Qita viñetas */
+    padding: 0;           
+    margin: 0;
+    display: flex;        /* Hace horizontal la lista */
+    gap: 20px;            /* Espaciado entre elementos */
+}
+
+
+.cv-container {
+    width: 900px;
+    margin: 60px auto;
+    padding: 50px; 
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    color: var(--text-color);
+}
+.header {
+    display: flex; /* Activa Flexbox para alinear elementos */
+    justify-content: space-between; /* Texto izquierda, foto derecha */
+    align-items: center; /* Alineación vertical */
+    gap: 40px; /* Espacio entre elementos */
+}
+
+.header h1 {
+    font-size: 36px; /* Tamaño grande para jerarquía visual */
+    color: var(--accent-color); /* Color principal del diseño */
+}
+
+.title {  /* Cargo o profesión */
+    color: #8892b0; /* Texto secundario */
+    margin-bottom: 15px;
+} 
+.summary { /* Descripción del perfil */
+    color: #8892b0;
+    line-height: 1.6; /* Mejora la lectura */
+    text-align: justify; /* Texto tipo documento formal */
+}
+
+.contacto span { /* CONTACTO */
+    display: block; /* Cada dato en una línea nueva */
+    font-size: 14px;
+    margin-bottom: 6px;
+    color: #8892b0;
+}
+
+.photo img { /* FOTO DE PERFIL */
+    width: 160px;
+    height: 180px;
+    object-fit: cover; /* Evita deformar la imagen */
+    border-radius: 12px;
+    border: 2px solid var(--accent-color);
+}
+hr {
+    margin: 40px 0;
+    border: none;
+
+    height: 1px;
+    background: #233554; /* Línea elegante oscura */
+}
+
+.content {
+    display: flex; /* Activa sistema de columnas */
+    gap: 60px; /* Espacio entre columnas */
+}
+
+.left,
+.right {
+    width: 50%; /* Cada columna ocupa la mitad */
+}
+
+section {
+    margin-bottom: 30px; /* Espacio entre secciones */
+}
+
+.cv-container h2 { /* TÍTULOS DE SECCIÓN */
+    font-size: 18px;
+    color: var(--accent-color);
+    border-bottom: 2px solid var(--accent-color); /* Línea decorativa*/
+    display: inline-block;
+    padding-bottom: 5px;
+    margin-bottom: 20px;
+}
+h3 { /* Los subtitulos */
+    font-size: 16px;
+    margin-bottom: 6px;
+}
+/* Bloques que llevan la información */
+.block {
+    margin-bottom: 20px;
+}
+.block p {
+    color: #8892b0;
+    font-size: 14px;
+    line-height: 1.5;
+    text-align: justify;
+}
+.cv-container ul {
+    list-style: none; /* Quita viñetas */
+    display: flex; /* Elementos en fila */
+    flex-wrap: wrap; /* Permite saltar a otra línea */
+    gap: 12px;
+}
+
+.cv-container ul li {
+    background: rgba(100,255,218,0.1);
+    color: var(--accent-color);
+    padding: 8px 14px;
+    border-radius: 20px; /* Forma cápsula */
+    font-size: 13px;
+    background: transparent;
+    padding: 0;
+}
+/* TEXTOS GENERALES */
+.cv-container p {
+    text-align: justify;
+    line-height: 1.6;
+}
+
+.links {
+    margin-top: 100px;
+    display: flex;
+    justify-content: center; /* Centra los enlaces */
+}
