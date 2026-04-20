@@ -1,0 +1,37 @@
+[
+  {
+    "nombre": "Juan",
+    "correo": "juan@gmail.com",
+    "contrasena": "$2a$12$oe8ZEXD7gbxcUSF5ocTzmuBm/Zcamxb7Rod6imj1L7hvYZe1iPTzW",
+    "preguntarc": "Color favorito",
+    "respuestarc": "$2a$12$bI82EFYS8kBoMvEHvi62HeQvMgj5Myo/Qs848uh6UMyVnBFBJ1oAO"
+  },
+  {
+    "nombre": "Ana",
+    "correo": "ana@gmail.com",
+    "contrasena": "$2a$12$abc",
+    "preguntarc": "Mascota",
+    "respuestarc": "$2a$12$xyz"
+  },
+  {
+    "nombre": "Luis",
+    "correo": "luis@gmail.com",
+    "contrasena": "$2a$12$123",
+    "preguntarc": "Ciudad",
+    "respuestarc": "$2a$12$456"
+  },
+  {
+    "nombre": "Juan",
+    "correo": "antonio.wr84@gmail.com",
+    "contrasena": "$2b$10$i1lTMBMXe3/RltK6IRZayuzE7aNyPCCY0lOOrP89S87pcx6PAYDzq",
+    "preguntarc": "Mascota",
+    "respuestarc": "$2b$10$KopR5mUWddvQfJAPpwLTfemvw5HQ5L9bkz/vPfg45z9Rk./TGLhXS"
+  },
+  {
+    "nombre": "Marcelino",
+    "correo": "marce@gmail.com",
+    "contrasena": "$2b$10$LlZTWsMAn//1VXMhQRdQkeneVOxp8HTLeqSkFwAYQzPsh3RqKxa16",
+    "preguntarc": "Nieto",
+    "respuestarc": "$2b$10$uJb6S4Qf3KjrwaM2Zn0oB.TYRfrMFOCcinfQHy9ikT09OCOZI9dXW"
+  }
+]

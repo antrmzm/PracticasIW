@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Recuperación de Contraseña</title>
+    <link rel="stylesheet" href="../css/formStyles.css" />
+</head>
+<body>
+
+    <h2>Recuperación de Contraseña</h2>
+
+<form id="formRecuperar">
+
+        <!-- CORREO -->
+        <input type="email" id="correo" placeholder="Correo electrónico" required>
+
+        <!-- PREGUNTA -->
+        <p id="preguntaTexto"></p>
+
+        <!-- RESPUESTA -->
+        <div id="grupoRespuesta" style="display:none;">
+            <input type="text" id="respuesta" placeholder="Respuesta de seguridad">
+        </div>
+
+        <!-- PASSWORD -->
+        <div id="grupoPassword" style="display:none;">
+            <input type="password" id="nuevaPassword" placeholder="Nueva contraseña">
+            <input type="password" id="confirmPassword" placeholder="Confirmar contraseña">
+        </div>
+
+        <button type="submit">Verificar</button>
+
+        <p id="resultado"></p>
+
+        <button type="button" onclick="window.location.href='/login'">
+            Volver al login
+        </button>
+
+    </form>
+
+<script src="/js/recuperar.js"></script>
+
+</body>
+</html>
