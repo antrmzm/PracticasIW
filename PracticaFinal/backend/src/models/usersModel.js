@@ -85,3 +85,23 @@ export const softDeleteUser = async (id) => {
       WHERE id = @id
     `);
 };
+
+export const getSecurityQuestionByEmail = async (correo) => {
+  const pool = await getConnection();
+  const result = await pool.request()
+    .input('correo', correo)
+    .query('SELECT id, pregunta_seguridad, respuesta_seguridad FROM usuarios WHERE correo = @correo AND activo = 1');
+  return result.recordset[0];
+};
+
+export const updatePasswordById = async (id, nuevaContrasenaHash) => {
+  const pool = await getConnection();
+  await pool.request()
+    .input('id', id)
+    .input('contrasena', nuevaContrasenaHash)
+    .query(`
+      UPDATE usuarios
+      SET contrasena = @contrasena, fecha_actualizacion = GETDATE()
+      WHERE id = @id AND activo = 1
+    `);
+};
