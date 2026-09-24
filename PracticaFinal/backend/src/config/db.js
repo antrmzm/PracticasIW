@@ -9,8 +9,8 @@ export const sqlServerConfig = {
   server: process.env.SQLSERVER_SERVER,
   database: process.env.SQLSERVER_DB,
   options: {
-    encrypt: false,
-    trustServerCertificate: true,
+    encrypt: true,
+    trustServerCertificate: false,
   },
 };
 
