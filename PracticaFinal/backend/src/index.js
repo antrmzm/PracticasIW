@@ -30,17 +30,21 @@ dotenv.config();
 
 const app = express();
 
-
 app.use(cors({
-  origin: ['practicas-iw.vercel.app', 'https://practica-final-api.onrender.com']
+  origin: [
+    'https://practicas-iw.vercel.app', // Frontend en producción (Vercel)
+    'http://localhost:5173',           // Frontend en desarrollo (Vite)
+  ],
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }));
-
+ 
 app.use(express.json());
 // http://localhost:5000/api/
 app.use('/api', usersRoutes);
-
+ 
 const PORT = process.env.PORT || 5000;
-
+ 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
