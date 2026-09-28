@@ -32,7 +32,7 @@ const app = express();
 
 
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://practica-final-api.onrender.com']
+  origin: ['practicas-iw.vercel.app', 'https://practica-final-api.onrender.com']
 }));
 
 app.use(express.json());
