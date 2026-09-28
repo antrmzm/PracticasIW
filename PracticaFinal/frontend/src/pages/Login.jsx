@@ -1,69 +1,83 @@
-/*Guarda lo que el usuario escribe en email y password
-Al enviar el formulario, llama a loginUser() (que definimos en authService.js)
-para mandar los datos a la API de tu compañero
-Si la API responde con un token JWT, lo guarda con login(token) (del AuthContext) 
-y redirige al dashboard
-Si algo falla (contraseña incorrecta, API caída, etc.), muestra un mensaje de error */
-
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../api/authService";
 import { useAuth } from "../context/AuthContext";
+import AuthLayout from "../components/AuthLayout";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [correo, setCorreo] = useState("");
+  const [contrasena, setContrasena] = useState("");
   const [error, setError] = useState("");
+  const [cargando, setCargando] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setCargando(true);
 
     try {
-      const response = await loginUser({ email, password });
-      const { token } = response.data;
-      login(token);
+      const response = await loginUser({ correo: correo, contrasena: contrasena });
+      const { token, id, rol, nombre } = response.data;
+      login(token, { id: id, rol: rol, nombre: nombre });
       navigate("/dashboard");
     } catch (err) {
       console.error(err);
-      setError("Correo o contraseña incorrectos");
+      const mensaje = err.response?.data?.error || "Correo o contraseña incorrectos";
+      setError(mensaje);
+    } finally {
+      setCargando(false);
     }
   };
 
   return (
-    <div style={{ maxWidth: "400px", margin: "50px auto" }}>
-      <h2>Iniciar sesión</h2>
-      <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: "10px" }}>
-          <label>Correo:</label>
+    <AuthLayout
+      titulo="Iniciar sesión"
+      descripcion="Ingresa con tu correo y contraseña para continuar."
+      pie={
+        <>
+          <Link to="/forgot-password">¿Olvidaste tu contraseña?</Link>
+          <span>
+            ¿Aún no tienes cuenta? <Link to="/register">Crea una aquí</Link>
+          </span>
+        </>
+      }
+    >
+      <form onSubmit={handleSubmit} className="form">
+        <div className="field">
+          <label htmlFor="correo">Correo electrónico</label>
           <input
+            id="correo"
             type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={correo}
+            onChange={(e) => setCorreo(e.target.value)}
             required
-            style={{ width: "100%", padding: "8px" }}
+            autoComplete="email"
           />
         </div>
-        <div style={{ marginBottom: "10px" }}>
-          <label>Contraseña:</label>
+        <div className="field">
+          <label htmlFor="contrasena">Contraseña</label>
           <input
+            id="contrasena"
             type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={contrasena}
+            onChange={(e) => setContrasena(e.target.value)}
             required
-            style={{ width: "100%", padding: "8px" }}
+            autoComplete="current-password"
           />
         </div>
-        {error && <p style={{ color: "red" }}>{error}</p>}
-        <button type="submit" style={{ padding: "10px 20px" }}>
-          Entrar
+        {error && <p className="alert alert-error">{error}</p>}
+        {cargando && (
+          <p className="field-hint">
+            Verificando tus datos. Si el servidor estaba en reposo, la primera
+            respuesta puede tardar hasta un minuto.
+          </p>
+        )}
+        <button type="submit" className="btn btn-primary btn-block" disabled={cargando}>
+          {cargando ? "Entrando..." : "Entrar"}
         </button>
       </form>
-      <p style={{ marginTop: "10px" }}>
-        <a href="/forgot-password">¿Olvidaste tu contraseña?</a>
-      </p>
-    </div>
+    </AuthLayout>
   );
 }

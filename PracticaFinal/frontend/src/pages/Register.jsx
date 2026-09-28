@@ -1,21 +1,19 @@
-/* /login muestra el formulario de inicio de sesión
-/register muestra el formulario de registro
-La raíz (/) redirija automáticamente a /login*/
-
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "../api/authService";
+import AuthLayout from "../components/AuthLayout";
 
 export default function Register() {
   const [formData, setFormData] = useState({
     nombre: "",
-    email: "",
-    password: "",
-    pregunta: "",
-    respuesta: "",
+    correo: "",
+    contrasena: "",
+    pregunta_seguridad: "",
+    respuesta_seguridad: "",
   });
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  const [cargando, setCargando] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -25,6 +23,7 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setCargando(true);
 
     try {
       await registerUser(formData);
@@ -32,81 +31,94 @@ export default function Register() {
       setTimeout(() => navigate("/login"), 1500);
     } catch (err) {
       console.error(err);
-      setError("No se pudo registrar el usuario");
+      const mensaje = err.response?.data?.error || "No se pudo registrar el usuario";
+      setError(mensaje);
+    } finally {
+      setCargando(false);
     }
   };
 
   return (
-    <div style={{ maxWidth: "400px", margin: "50px auto" }}>
-      <h2>Registro de usuario</h2>
-      <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: "10px" }}>
-          <label>Nombre:</label>
+    <AuthLayout
+      titulo="Crear cuenta"
+      descripcion="Completa tus datos. La pregunta de seguridad te servirá para recuperar tu contraseña."
+      pie={
+        <span>
+          ¿Ya tienes cuenta? <Link to="/login">Inicia sesión</Link>
+        </span>
+      }
+    >
+      <form onSubmit={handleSubmit} className="form">
+        <div className="field">
+          <label htmlFor="nombre">Nombre</label>
           <input
+            id="nombre"
             type="text"
             name="nombre"
             value={formData.nombre}
             onChange={handleChange}
             required
-            style={{ width: "100%", padding: "8px" }}
+            autoComplete="name"
           />
         </div>
-        <div style={{ marginBottom: "10px" }}>
-          <label>Correo:</label>
+        <div className="field">
+          <label htmlFor="correo">Correo electrónico</label>
           <input
+            id="correo"
             type="email"
-            name="email"
-            value={formData.email}
+            name="correo"
+            value={formData.correo}
             onChange={handleChange}
             required
-            style={{ width: "100%", padding: "8px" }}
+            autoComplete="email"
           />
         </div>
-        <div style={{ marginBottom: "10px" }}>
-          <label>Contraseña:</label>
+        <div className="field">
+          <label htmlFor="contrasena">Contraseña</label>
           <input
+            id="contrasena"
             type="password"
-            name="password"
-            value={formData.password}
+            name="contrasena"
+            value={formData.contrasena}
             onChange={handleChange}
             required
-            style={{ width: "100%", padding: "8px" }}
+            minLength={6}
+            autoComplete="new-password"
           />
+          <span className="field-hint">Mínimo 6 caracteres.</span>
         </div>
-        <div style={{ marginBottom: "10px" }}>
-          <label>Pregunta de seguridad:</label>
+        <div className="field">
+          <label htmlFor="pregunta_seguridad">Pregunta de seguridad</label>
           <select
-            name="pregunta"
-            value={formData.pregunta}
+            id="pregunta_seguridad"
+            name="pregunta_seguridad"
+            value={formData.pregunta_seguridad}
             onChange={handleChange}
             required
-            style={{ width: "100%", padding: "8px" }}
           >
-            <option value="">-- Selecciona una pregunta --</option>
-            <option value="mascota">¿Cómo se llamó tu primera mascota?</option>
-            <option value="ciudad">¿En qué ciudad naciste?</option>
-            <option value="escuela">¿Cómo se llamaba tu escuela primaria?</option>
+            <option value="">Selecciona una pregunta</option>
+            <option value="¿Cómo se llamó tu primera mascota?">¿Cómo se llamó tu primera mascota?</option>
+            <option value="¿En qué ciudad naciste?">¿En qué ciudad naciste?</option>
+            <option value="¿Cuál es tu color favorito?">¿Cuál es tu color favorito?</option>
           </select>
         </div>
-        <div style={{ marginBottom: "10px" }}>
-          <label>Respuesta:</label>
+        <div className="field">
+          <label htmlFor="respuesta_seguridad">Respuesta</label>
           <input
+            id="respuesta_seguridad"
             type="text"
-            name="respuesta"
-            value={formData.respuesta}
+            name="respuesta_seguridad"
+            value={formData.respuesta_seguridad}
             onChange={handleChange}
             required
-            style={{ width: "100%", padding: "8px" }}
           />
         </div>
-        {error && <p style={{ color: "red" }}>{error}</p>}
-        {success && (
-          <p style={{ color: "green" }}>¡Registrado! Redirigiendo...</p>
-        )}
-        <button type="submit" style={{ padding: "10px 20px" }}>
-          Registrarse
+        {error && <p className="alert alert-error">{error}</p>}
+        {success && <p className="alert alert-success">Cuenta creada. Redirigiendo al inicio de sesión...</p>}
+        <button type="submit" className="btn btn-primary btn-block" disabled={cargando || success}>
+          {cargando ? "Creando cuenta..." : "Crear cuenta"}
         </button>
       </form>
-    </div>
+    </AuthLayout>
   );
 }

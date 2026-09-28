@@ -1,38 +1,27 @@
-/* Guarda el token JWT en localStorage (para que no se pierda al recargar la página)
-Decodifica el token para saber quién es el usuario y su rol Expone login(), logout(),
-user (con el rol) e isAuthenticated para usarlos en cualquier parte de la app */
-
-import { createContext, useContext, useState, useEffect } from "react";
-import { jwtDecode } from "jwt-decode";
+import { createContext, useContext, useState } from "react";
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [token, setToken] = useState(localStorage.getItem("token") || null);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(
+    localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null
+  );
 
-  useEffect(() => {
-    if (token) {
-      try {
-        const decoded = jwtDecode(token);
-        setUser(decoded);
-        localStorage.setItem("token", token);
-      } catch (error) {
-        console.error("Token inválido:", error);
-        logout();
-      }
-    } else {
-      localStorage.removeItem("token");
-      setUser(null);
-    }
-  }, [token]);
-
-  const login = (newToken) => {
+  // Se llama justo después de un login exitoso
+  // userData debe ser { id, rol, nombre }
+  const login = (newToken, userData) => {
     setToken(newToken);
+    setUser(userData);
+    localStorage.setItem("token", newToken);
+    localStorage.setItem("user", JSON.stringify(userData));
   };
 
   const logout = () => {
     setToken(null);
+    setUser(null);
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
   };
 
   const value = {
